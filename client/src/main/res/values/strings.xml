@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">COMP 3275 Project Client</string>
+    <string name="alertNotice">Specify the number of the alert service to subscribe to or unsubscribe from</string>
+</resources>
