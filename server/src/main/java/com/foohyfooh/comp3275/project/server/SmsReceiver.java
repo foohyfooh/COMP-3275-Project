@@ -12,13 +12,17 @@ public class SmsReceiver extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
+            PhoneNumberManager manager = new PhoneNumberManager(context);
             Object[] pdus = (Object[]) bundle.get("pdus");
             SmsMessage[] recMsg = new SmsMessage[pdus.length];
             for (int i = 0; i < recMsg.length; i++){
                 String format = bundle.getString("format");
                 recMsg[i] = SmsMessage.createFromPdu((byte[]) pdus[i], format);
-                recMsg[i].getOriginatingAddress();
-                recMsg[i].getMessageBody();
+
+                String number = recMsg[i].getOriginatingAddress();
+                String message = recMsg[i].getMessageBody();
+                if(message.equals("subscribe")) manager.insertPhoneNumber(number);
+                else if(message.equals("unsubscribe")) manager.deletePhoneNumber(number);
             }
         }
     }
