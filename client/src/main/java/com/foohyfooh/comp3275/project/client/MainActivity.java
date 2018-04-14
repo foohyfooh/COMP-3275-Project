@@ -1,5 +1,8 @@
 package com.foohyfooh.comp3275.project.client;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -8,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int RC_SMS = 1;
+    private static final String[] permissions = {Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
         subscribe.setOnClickListener(listener);
         unsubscribe.setOnClickListener(listener);
+
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, permissions, RC_SMS);
+        }
     }
 
     private void sendSMS(String phoneNumber, String message){
