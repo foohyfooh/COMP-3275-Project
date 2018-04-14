@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">COMP 3275 Project Server</string>
-    <string name="main_instructions">List of the subscribers to the alert system. Long Click on a number oto remove it.</string>
+    <string name="main_instructions">List of the subscribers to the alert system. Click and hold a number to remove it. Swipe down below the Alert button to refresh the list</string>
     <string name="send_alert">Send Alert</string>
     <string name="message">Message</string>
 </resources>
