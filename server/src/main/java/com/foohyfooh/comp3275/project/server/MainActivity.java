@@ -1,7 +1,10 @@
 package com.foohyfooh.comp3275.project.server;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +16,9 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipe;
+
+    private static final int RC_SMS = 1;
+    private static final String[] permissions = {Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Phone number removed", Toast.LENGTH_SHORT).show();
             }
         });
+
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, permissions, RC_SMS);
+        }
     }
 
 
