@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private SwipeRefreshLayout swipe;
 
     private static final int RC_SMS = 1;
     private static final String[] permissions = {Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS};
@@ -25,22 +24,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button gotoSendAlert = findViewById(R.id.main_gotoSendAlert);
-        swipe = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
-        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Intent intent3 = getIntent();
-                overridePendingTransition(0, 0);
-                intent3.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                finish();
-                overridePendingTransition(0, 0);
-                startActivity(intent3);
-            }
-        });
+        SwipeRefreshLayout swipe = findViewById(R.id.swiperefresh);
         ListView phoneNumbers = findViewById(R.id.main_phoneNumbers);
         final PhoneNumberManager phoneNumberManager = new PhoneNumberManager(this);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, phoneNumberManager.getPhoneNumbers());
         phoneNumbers.setAdapter(adapter);
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Intent intent = getIntent();
+                overridePendingTransition(0, 0);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(intent);
+            }
+        });
 
         gotoSendAlert.setOnClickListener(new View.OnClickListener() {
             @Override
