@@ -14,7 +14,7 @@ public class PhoneNumberManager extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String TABLE_NAME = "PhoneNums";
     private static final String COLUMN_NUMBER = "number";
-    private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" + COLUMN_NUMBER + " TEXT NOT NULL);";
+    private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" + COLUMN_NUMBER + " TEXT NOT NULL PRIMARY KEY);";
 
     public PhoneNumberManager(Context context) {
         super(context, "Server", null, DB_VERSION);
@@ -51,7 +51,7 @@ public class PhoneNumberManager extends SQLiteOpenHelper {
 
     public int deletePhoneNumber( String phoneNumber){
         SQLiteDatabase database = getWritableDatabase();
-        return database.delete(TABLE_NAME, COLUMN_NUMBER + "=?", new String[]{phoneNumber});
+        return database.delete(TABLE_NAME, COLUMN_NUMBER + " = ?", new String[]{phoneNumber});
     }
 
 }
